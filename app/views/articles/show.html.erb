@@ -8,10 +8,17 @@
   <p><%= image_tag @article.image.url %></p>
 <% end %>
 <p><%= @article.body %></p>
+<% if logged_in? %>
+  <br>
+  <p>
+    <%= link_to "edit", edit_article_path(@article) %> | <%= link_to "Delete", article_path(@article), method: :delete, data: {confirm: "Really delete the article?"} %>
+  </p>
+<% end %>
 <br>
-<p>
-  <%= link_to "edit", edit_article_path(@article) %> | <%= link_to "Delete", article_path(@article), method: :delete, data: {confirm: "Really delete the article?"} %>
-</p>
+<h3>Comments (<%= @article.comments.size %>)</h3>
+<%= render partial: 'articles/comment', collection: @article.comments %>
+<%= render partial: 'comments/form' %>
+<hr>
 <p>
   <%= link_to "<< Back to articles list", articles_path %>
 </p>
